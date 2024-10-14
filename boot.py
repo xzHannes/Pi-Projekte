@@ -1,4 +1,8 @@
-import time
+import storage
+import usb_hid
 
-# Führe eine grundlegende Initialisierung durch
-time.sleep(1)  # Warten, bevor 'code.py' ausgeführt wird
+# Deaktiviere das USB-Laufwerk (Massenspeicher)
+storage.disable_usb_drive()
+
+# Aktiviere HID (Tastatur, Maus, etc.)
+usb_hid.enable((usb_hid.Device.KEYBOARD,))
