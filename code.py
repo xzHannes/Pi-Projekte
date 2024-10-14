@@ -1,38 +1,80 @@
 import usb_hid
 import time
 from adafruit_hid.keyboard import Keyboard
-from adafruit_hid.keycode import Keycode
+from adafruit_hid.keycode_win_de import Keycode
 
 # Initialisiere die Tastatur
 kbd = Keyboard(usb_hid.devices)
 
-time.sleep(1)  # Warte, bis der Computer bereit ist
-
-# Öffne PowerShell
-kbd.send(Keycode.WINDOWS, Keycode.R)
-time.sleep(0.5)
-kbd.write("powershell\n")
+# Warte, bis der Computer bereit ist
 time.sleep(1)
 
-# Installiere SSH-Client
-kbd.write("Add-WindowsCapability -Online -Name OpenSSH.Client*\n")
-time.sleep(5)  # Warte, bis der Befehl ausgeführt wird
+# Öffne das "Run"-Fenster
+kbd.send(Keycode.WINDOWS, Keycode.R)
+time.sleep(1)
 
-# Installiere SSH-Server
-kbd.write("Add-WindowsCapability -Online -Name OpenSSH.Server*\n")
-time.sleep(5)
+# SSH-Befehl im Run-Fenster eingeben: ssh admin@169.254.103.252
+kbd.send(Keycode.S)
+kbd.send(Keycode.S)
+kbd.send(Keycode.H)
+kbd.send(Keycode.SPACE)
 
-# Starte den SSH-Server
-kbd.write("Start-Service sshd\n")
-time.sleep(2)
+# Benutzername "admin"
+kbd.send(Keycode.A)
+kbd.send(Keycode.D)
+kbd.send(Keycode.M)
+kbd.send(Keycode.I)
+kbd.send(Keycode.N)
 
-# Setze den SSH-Server auf Autostart
-kbd.write("Set-Service -Name sshd -StartupType 'Automatic'\n")
-time.sleep(2)
+# Strg + Alt + Q für @-Zeichen auf deutschem Layout
+kbd.press(Keycode.CONTROL)
+kbd.press(Keycode.ALT)
+kbd.send(Keycode.Q)
+kbd.release(Keycode.CONTROL)
+kbd.release(Keycode.ALT)
 
-# SSH-Verbindung herstellen
-kbd.write("ssh Aleks@169.254.116.134\n")
-time.sleep(0.5)
+# IP-Adresse: 169.254.103.252
+kbd.send(Keycode.ONE)
+kbd.send(Keycode.SIX)
+kbd.send(Keycode.NINE)
+kbd.send(Keycode.PERIOD)
+kbd.send(Keycode.TWO)
+kbd.send(Keycode.FIVE)
+kbd.send(Keycode.FOUR)
+kbd.send(Keycode.PERIOD)
+kbd.send(Keycode.ONE)
+kbd.send(Keycode.ZERO)
+kbd.send(Keycode.THREE)
+kbd.send(Keycode.PERIOD)
+kbd.send(Keycode.TWO)
+kbd.send(Keycode.FIVE)
+kbd.send(Keycode.TWO)
 
-# Passwort eingeben (falls nötig)
-kbd.write("123\n")
+# Drücke Enter, um den Befehl auszuführen
+kbd.send(Keycode.ENTER)
+time.sleep(1)
+
+# Passwort eingeben: admin
+kbd.send(Keycode.A)
+kbd.send(Keycode.D)
+kbd.send(Keycode.M)
+kbd.send(Keycode.I)
+kbd.send(Keycode.N)
+kbd.send(Keycode.ENTER)
+time.sleep(1)
+
+# Wechsle auf den Desktop
+kbd.send(Keycode.C)
+kbd.send(Keycode.D)
+kbd.send(Keycode.SPACE)
+kbd.press(Keycode.SHIFT)
+kbd.send(Keycode.D)
+kbd.release(Keycode.SHIFT)
+kbd.send(Keycode.E)
+kbd.send(Keycode.S)
+kbd.send(Keycode.K)
+kbd.send(Keycode.T)
+kbd.send(Keycode.O)
+kbd.send(Keycode.P)
+kbd.send(Keycode.ENTER)
+time.sleep(1)
